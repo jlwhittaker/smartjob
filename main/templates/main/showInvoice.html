@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>  
+
+    </head>
+    <body>
+        <h1>Invoice number {{ invoice.id }}</h1>
+        <h2> Customer: <a href="/main/customers/{{invoice.customer.id}}"{{ invoice.customer.name }}</a></a></h2>
+        <h2>Tasks:</h2>
+        {% for i in tasks %}
+            <li>{{ i.name }} --- {{ i.description }} --- ${{ i.total }}</li>
+        {% endfor %}
+        <a href="/main">Go home</a>
+    </body>
+</html>

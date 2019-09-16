@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Add new job</title>
+</head>
+<body>
+	<div>
+		<form id="add-job" action="/main/addJob/{{ customer.id }}" method="post">
+				{% csrf_token %}
+				Customer:<br>
+				<input type="text" value="{{ customer.name }}" readonly name="customer"><br>
+				Job Name:<br>
+				<input type="text" name="name"><br>
+				Starting date:<br>
+				<input type="date" name="start_date"><br>
+
+				<input type="submit" value="Submit">
+
+		</form>
+	</div>
+
+	<div id="error-message">
+		<h3 style="color: red;"> {{ message }} </h3>
+	</div>
+
+	<script type="text/javascript">
+		// Ensure form was filled out correctly, and that the job doesn't already exist
+		// AJAX request to check for any jobs with same customer, name, and date
+		// This logic used to be on the back end, but I want the server to assume data is correct
+/*
+submit button is clicked, validate function is called
+check that forms are filled correctly
+send ajax request with customer name, job name, start_date
+if server says okay, then send POST (<name of form>.submit())
+*/
+
+		document.querySelector("input[type='submit']").addEventListener('click', (e) => {
+			e.preventDefault();
+			validate().then((response) => { 
+				if (response == true) {
+					document.querySelector("#add-job").submit();
+				}
+				else {
+					alert("Job already exists!");
+				}
+			});
+		});
+
+		var validate = function() {
+			return new Promise(function (resolve, reject) { 
+				let success = false;
+				let job_name = document.querySelector("#add-job input[name='name']").value;
+				let customer = document.querySelector("#add-job input[name='customer']").value;
+				let start_date = document.querySelector("#add-job input[name='start_date']").value;
+				let json = JSON.stringify({
+								name: job_name,
+								customer: customer,
+								start_date: start_date,
+						});
+				let xhr = new XMLHttpRequest();
+				let url = "/main/validateJob"
+				xhr.open("POST", url);
+				xhr.setRequestHeader("Content-Type", "application/json");
+				xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}" );
+				xhr.onreadystatechange = function () {
+					if (xhr.readyState == 4 && xhr.status == 200) {
+						resolve(JSON.parse(xhr.responseText).success);				
+					}
+				}
+				xhr.send(json);
+			});
+		}
+		
+		
+
+	</script>
+</body>
+</html>

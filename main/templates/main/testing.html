@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Testing page</title>
+	{% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static 'main/testing.css' %}">
+	<link href="https://fonts.googleapis.com/css?family=PT+Serif&amp;display=swap" rel="stylesheet">
+</head>
+<body>
+
+	<div id="modal-button">
+		<button>Open Modal</button>
+	</div>
+
+	<div id="customer-select-modal-container" class="modal-container">
+		<div id="customer-select-modal-content" class="modal-content">
+			<h1>Choose a customer...</h1>
+			<form id="customer-selection-form">
+				<input id="customer-selection" type="text">
+				<input type="submit" value="Submit">
+			</form>
+		</div>
+	</div>
+	<button onclick="toggleElems(event)" style="display: inline" name="elem1">Elem1</button>
+	<button onclick="toggleElems(event)" style="display: inline" name="elem2">Elem2</button>
+
+	<div class="tab-card">
+		<div id="name">Jon Whittaker</div>
+		<div id="phone">(585) 747-6642</div>
+		<div id="email">jonw91@gmail.com</div>
+		<div id="address">
+			<div class="street">14522 S Highway 170</div>
+			<div class="town">West Fork, AR 72774</div>
+		</div>
+	</div>
+
+
+	<div class="gradient"></div>
+
+
+<script type="text/javascript">
+
+	var button = document.getElementById('modal-button');
+	var modal = document.getElementById('customer-select-modal-container');
+	var searchBar = document.getElementById('customer-selection');
+
+	button.onclick = function() {
+		modal.style.display = 'block';
+	}
+
+	window.onclick = function(e) {
+		if (e.target == modal) {
+			modal.style.display = 'none';		
+		}	
+	}
+
+	console.log("foo");
+
+	searchBar.addEventListener('input', function(e) {
+		query = e.target.value.replace(/\s+/g, '');
+		if (query) {
+			path = "/main/findCustomer/"+query;
+			queryForMatch(path).then((response) => { showOptions(response); });
+		}
+	});
+
+	var match;
+	var choices = 	[
+					"Jon", 
+					"Olivia",
+					"Thomasina",
+					"Luna",
+					"Bob",
+					"Alice",
+					"Joe"
+					];
+
+	function queryForMatch(url) {
+		return new Promise(function(resolve, reject) {
+			let response = "";
+			let request = new XMLHttpRequest();
+			request.onreadystatechange = function() {
+				if (request.readyState == 4 && request.status == 200) {
+					response = JSON.parse(request.responseText);
+					resolve(response);
+				}
+			}
+			request.open("GET", url, true);
+			request.send()
+		});
+
+	}
+
+	function showOptions(response) {
+
+		response.customers.forEach((elem) => {
+			console.log(elem.phone);
+		});
+
+	}
+
+</script>
+</body>
+</html>

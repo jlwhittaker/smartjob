@@ -1,0 +1,143 @@
+body {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+div {
+	border: solid 1px black;
+}
+
+#page-container {
+	position: absolute
+	width: 100%;
+	height: 100%;
+}	
+
+#header {
+
+	width: auto;
+	height: 90px;
+	border: 3px solid black;
+	box-sizing: border-box;
+	padding: none;
+
+}
+
+#side-bar {
+
+	position:absolute;
+	margin-top: 90px;
+	margin-bottom: 0;
+	height: 100%;
+	width: 20%;
+	padding: 0;
+	
+	float: left;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	background: #F1F1F1;
+
+}
+
+#side-bar-nav-list {
+	margin: 0;
+	position: relative;
+	width: 100%;
+	display: flex;
+	padding: 0;
+	flex-flow: column;
+	justify-content: center;
+	overflow: none;
+}
+
+#side-bar-nav-list > li {
+	position: relative;
+	justify-content: center;
+	padding: 15px;
+
+}
+
+.nav-parent:hover {
+	background: #b8b3f2;
+	padding: 0;
+}
+
+.nav-parent > ul {
+	display: none;
+	list-style: none;
+	flex-flow: column;
+	padding: 0;
+}
+.nav-parent li {
+	width: 100%;
+	margin: 0;
+	padding: 5px;
+	border-top: solid 1px black;
+	border-bottom: solid 1px black;
+}
+
+
+#main-body{
+
+	overflow: hidden;
+	position: absolute;
+	left: 20%;
+	margin-left: 0;
+	right: 0;
+}
+
+#tabs-list {
+	position: relative;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+
+}
+
+#tabs-list div {
+	margin: none;
+	padding: 8px;
+	background-color: #F1F1F1;
+	border: 2px solid black;
+	cursor: pointer;
+}
+
+#tabs-list div:hover{
+	background-color: #b8b3f2
+}
+
+
+#recent-content {
+	padding: 0;
+}
+
+#tab-content-container {
+	padding: 0;
+}
+
+#tab-content-container a {
+	text-decoration: none;
+	color: black;
+}
+
+#tab-content-container > ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+
+}
+
+.tab-content {
+	display: none;
+}
+
+.tab-element {
+	position: relative;
+	width: 100%;
+}
+
+.tab-element:hover {
+	background: #F1F1F1;
+}
+

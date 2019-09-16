@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{ customer.name }}</title>
+</head>
+<body>
+	<h1>{{ customer.name }}</h1>
+
+	<a href="/main/jobs/new/{{ customer.id }}">
+		<button id="add-job-button">Add new job</button>
+	</a>
+	<a href="/main/estimates/new/{{ customer.id }}" style="display: block;">
+		<button id="new-estimate-button">Create new estimate</button>
+	</a>
+
+	<div id="jobs-list">
+		<h1>Jobs:</h1>
+		<ul>	
+			{% for job in jobs %}
+				<li>
+					<a href="../../main/jobs/{{job.id}}">{{ job.name }}</a>
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+	<div id="estimate-list">
+		<h1>Estimates:</h1>
+		<ul>	
+			{% for estimate in estimates %}
+				<li>
+					<a href="../../main/estimates/{{estimate.id}}">{{ estimate.name }}</a>
+				</li>
+			{% endfor %}
+		</ul>
+		<a href="/main">Go home</a>
+	</div>
+
+	<script type="text/javascript">
+
+	</script>
+</body>
+</html>
