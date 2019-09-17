@@ -6,6 +6,9 @@ from .models import *
 from django.utils import timezone
 import json
 import sys
+import logging
+
+logging = getLogger(__name__)
 
 def testing(request):
 	context = {}
@@ -36,6 +39,7 @@ def addCustomer(request):
 	context = {
 		"message": message,
 	}
+	logger.log("TEST")
 	return redirect('/main')
 
 def validateJob(request):
