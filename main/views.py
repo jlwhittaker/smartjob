@@ -8,7 +8,7 @@ import json
 import sys
 import logging
 
-logging = getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 def testing(request):
 	context = {}
