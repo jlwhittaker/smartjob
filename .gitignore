@@ -1,2 +1,2 @@
-crm/*/*.scss
-crm/*/*.css
+crm/**/*.scss
+crm/**/*.css
