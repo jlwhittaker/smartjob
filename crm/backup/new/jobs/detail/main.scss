@@ -1,0 +1,540 @@
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    min-height: 100%;
+    position: absolute;
+}
+
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0 auto;
+    border-right: 1px solid #bbb;
+    border-left: 1px solid #bbb;
+}
+
+.header {
+    height: 8rem;
+
+    .job-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: .5rem;
+        border-bottom: solid 1px black;
+        background-color: rgba(0, 0, 0, 0.397);
+
+        &__id {
+            font-size: 1.2rem;
+        }
+    }
+
+    .job-banner {
+        position: relative;
+        display: flex;
+        justify-content: space-around;
+        grid-template-columns: 1fr 1fr;
+        padding: 1rem;
+        // border-bottom: solid 1px black;
+
+        h1 {
+            font-family: "Merriweather Sans", sans-serif;
+            font-weight: 200;
+            font-style: italic;
+            border-bottom: solid 1px #ccc;
+            // margin: .5rem auto;
+        }
+
+        button {
+            @media only screen and (max-width: 999px) {
+                display: none;
+            }
+        }
+    }
+
+}
+
+.nav {
+    // flex: 0 0 10%;
+    // padding: 0 0 3px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @media only screen and (min-width: 1000px) {
+        button:first-child {
+            background-color: rgb(128, 128, 128);
+            color: rgb(238, 238, 238);
+            font-weight: 400;
+        }
+    }
+
+    &__buttons {
+        display: flex;
+        width: 100%;
+        // max-width: 80rem;
+        border-bottom: solid 1px black;
+    }
+
+    &__button {
+        font-size: 1.5rem;
+        flex: 1;
+        padding: 0;
+        border-radius: 0;
+        padding: .5rem 0;
+        background-color: rgb(221, 221, 221);
+        border: solid 1px black;
+        &::-moz-focus-inner {
+            border: 0;
+        }
+
+        &.active {
+            background-color: rgb(128, 128, 128);
+            color: rgb(238, 238, 238);
+            font-weight: 400;
+        }
+    }
+
+    .add_note_btn {
+        display: none;
+        position: absolute;
+        border: none;
+        border-radius: 10rem;
+        background-color: rgb(89, 133, 253);
+        color: #fff;
+        font-size: 2.5rem;
+        font-weight: 400;
+        margin: 1rem;
+        box-shadow: 0 .2rem .4rem #888;
+        height: 4rem;
+        width: 4rem;
+        right: 0;
+        bottom: 4rem;
+        opacity: .8;
+
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
+
+    .notes_btn.active + .add_note_btn {
+        display: block;
+    }
+}
+
+
+.content {
+
+    overflow: auto;
+    flex: 1;
+
+    @media only screen and (min-width: 1000px) {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: 1fr;
+        overflow: hidden;
+    }
+
+    .job-details {
+        display: block;
+        padding: 2rem;
+
+        &:not(.active) {
+            display: none;
+        }
+
+        @media only screen and (min-width: 1000px) {
+            position: relative;
+            grid-column: 1 / 1;
+            border-right: solid 1px #333;
+            left: 1px;
+            overflow: auto;
+            box-shadow: 1px 0 .5rem #aaa;
+
+            &:not(.active) {
+                display: block;
+            }
+        }
+
+        h4 {
+            font-size: 1.7rem;
+            font-family: "Merriweather Sans", sans-serif;
+            border-bottom: solid 1px #ccc;
+            padding-bottom: .4rem;
+        }
+
+        ul {
+            list-style: none;
+            padding: 1.5rem 0;
+
+            li {
+                padding: .3rem;
+                font-size: 1.5rem;
+            }
+        }
+
+        &__contact {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+
+
+            h4 {
+                grid-column: 1 / -1;
+                margin-bottom: 1rem;
+            }
+
+            p {
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+
+                &:nth-child(2n+0) {
+                    font-size: 1.5rem;
+                    font-weight: 500;
+                    font-family: sans-serif;
+                }
+
+                &:last-child {
+                    display: flex;
+                    flex-direction: column;
+
+                    span {
+                        padding: .2rem 0;
+                    }
+                }
+            }
+        }
+
+        &__description {
+            p {
+                margin: 2rem 0;
+                font-size: 1.5rem;
+            }
+        }
+
+
+        &__date {
+            height: 6rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding-bottom: .5rem;
+
+            p {
+                font-size: 1.3rem;
+                font-style: italic;
+                font-family: sans-serif;
+                color: #333
+            }
+        }
+    }
+
+    &__tasks {
+
+        display: flex;
+        flex-direction: column;
+        grid-column: 2 / -1;
+        overflow: auto;
+
+        &:not(.active) {
+            display: none;
+        }
+
+        &-header {
+
+            display: flex;
+            padding: .3rem 0;
+            border-bottom: solid 2px black;
+
+            div {
+                text-align: center;
+            }
+
+            &>div:not(:last-child) {
+                border-right: solid 1px #ccc;
+            }
+
+            &-num {
+                flex: 0 0 5%;
+                padding-left: .5rem;
+            }
+
+            &-name {
+                flex: 1;
+            }
+
+            &-qty {
+                flex: 0 0 10%;
+            }
+
+            &-price {
+                flex: 0 0 15%;
+            }
+        }
+
+        &-list {
+            overflow-y: auto;
+        }
+    }
+
+    &__task {
+        display: grid;
+        grid-template-rows: min-content 1fr;
+
+        .flex-wrap {
+            display: flex;
+            padding: 1rem 0;
+
+            div {
+                text-align: center;
+                padding: .3rem 0;
+            }
+
+            &>div:not(:last-child) {
+                border-right: solid 1px #ccc;
+            }
+
+            border-bottom: 1px solid #ccc;
+        }
+
+
+        &-num {
+            flex: 0 0 5%;
+            padding-left: .5rem;
+        }
+
+        &-name {
+            flex: 1;
+            padding-left: 4rem;
+            font-size: 1.4rem;
+            font-family: sans-serif;
+            font-style: italic;
+            font-weight: 600;
+        }
+
+        &-qty {
+            flex: 0 0 10%;
+            font-size: 1.3rem;
+        }
+
+        &-price {
+            flex: 0 0 15%;
+            font-size: 1.3rem;
+        }
+
+        &-desc {
+            display: none;
+            font-size: 1.2rem;
+            padding: 1rem 1rem 3rem 1rem;
+            border: solid 1px #ccc;
+            border-top: none;
+            grid-row: 2 / -1;
+            grid-column: 1 / -1;
+        }
+
+        &.selected>.content__task-desc {
+            display: block;
+        }
+    }
+
+    &__notes {
+        display: flex;
+        flex-direction: column;
+        grid-column: 2 / -1;
+        grid-row: 1 / -1;
+        overflow: auto;
+
+        &:not(.active) {
+            display: none;
+        }
+
+
+        &-header {
+            display: flex;
+            padding: .3rem 0;
+            border-bottom: solid 2px black;
+
+            div {
+                text-align: center;
+            }
+
+            &>div:not(:last-child) {
+                border-right: solid 1px #ccc;
+            }
+
+            &-id {
+                flex: 0 0 8%;
+            }
+
+            &-date {
+                flex: 0 0 15%;
+            }
+
+            &-content {
+                flex: 1;
+            }
+        }
+
+        ul {
+            overflow-y: scroll;
+        }
+    }
+
+    &__note {
+        display: flex;
+
+        div {
+            font-size: 1.4rem;
+            text-align: center;
+            padding: .7rem 0;
+        }
+
+        &>div:not(:last-child) {
+            border-right: solid 1px #ccc;
+        }
+
+        border-bottom: 1px solid #ccc;
+        
+        &-date {
+            flex: 0 0 15%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            font-size: 1rem !important;
+        }
+
+        &-content {
+            padding: 1rem !important;
+            flex: 1;
+        }
+    }
+
+    .add_note_modal {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        height: 100vh;
+        width: 100%;
+        background-color: rgba(0,0,0,.7);
+        z-index: 10;
+
+        &__content {
+            position: absolute;
+            max-height: 300px;
+            overflow: auto;
+            height: 90%;
+            width: 90%;
+            max-width: 800px;
+            padding: 1rem;
+            background-color: white;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+
+            form {
+                height: 100%;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: 1fr min-content;
+
+                textarea {
+                    font-family: sans-serif;
+                    font-weight: 300;
+                    resize: none;
+                    padding: .5rem;
+                    grid-column: 1 / -1;
+                    height: 60;
+                }
+
+                button {
+                    padding: 1.5rem 1rem;
+                }
+            }
+        }
+
+        &:not(.active) {
+            display: none;
+        }
+    }
+}
+
+
+.footer {
+    // height: 4rem;
+    position: relative;
+    background: #fff;
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+
+    @media only screen and (min-width: 1000px) {
+        position: static;
+    }
+
+    &__button {
+        background-color: #ddd;
+        height: 100%;
+        border: solid 1px black;
+        border-radius: 0;
+        padding: 1rem;
+        flex: 1;
+        cursor: pointer;
+
+        @media only screen and (min-width: 1000px) {
+            display: none;
+        }
+
+        &::-moz-focus-inner {
+            border: 0;
+        }
+
+        &:hover {
+            background-color: #ccc;
+        }
+
+    }
+
+    .job-stop-prompt {
+        // height: auto;
+        transform: scaleY(1);
+        overflow: auto;
+        position: absolute;
+        right: 0;
+        bottom: 100%;
+        width: 25rem;
+        display: flex;
+        flex-direction: column;
+        transition: all .2s;
+        transform-origin: bottom;
+
+        @media only screen and (min-width: 1000px) {
+            top: 7rem;
+            bottom: auto;
+        }
+
+        button {
+            background-color: #eee;
+            padding: 1.5rem;
+            border: 1px solid #ccc;
+        }
+
+        &:not(.active) {
+            transform: scaleY(0);
+            overflow: hidden;
+        }
+    }
+}

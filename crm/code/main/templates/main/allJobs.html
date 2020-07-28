@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<head>
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static '/main/allCustomers/style.css' %}" />
+  {% load static %}
+  <script type="text/javascript" src="{% static '/main/allJobs/script.js' %}"></script>
+
+  <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:300,400,700&display=swap" rel="stylesheet"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=1">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+</head>
+<body>
+  <div class="container">
+    <div class="cover"></div>
+    <header class="header">
+      <p>{{ user }} <span>&dtrif;</span></p>
+      <p>All Jobs...</p>
+      <button class="btn" onclick="window.location.href='/'">Go Back Home</button>
+      <div class="log_out">
+        <button><a href="/logout">Log out</a></button>
+      </div>
+    </header>
+    <main class="content">
+      <div class="search_bar">
+        <input id="search" type="search" placeholder="Search...">
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Job Name <span> &utrif;</span></th>
+            <th class="selected ascending">Customer Name <span> &utrif;</span></th>
+            <th>Date Added <span> &utrif;</span></th>
+            <th>Last Active <span> &utrif;</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for job in jobs %}
+          <tr>
+            <td>{{ job.id }}</td>
+            <td>{{ job.name }}</td>
+            <td>{{ job.customer.name }}</td>
+            <td>{{ job.creation_date }}</td>
+            <td>{{ job.last_modified }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </main>
+    <footer class="footer">
+      <button class="footer-btn" onclick="window.location.href='/'">Go back home</button>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,1 @@
+Fix styling on cards on Index page, symmetry needed

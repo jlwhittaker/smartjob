@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<head>
+  {% load static %}
+  <script type="text/javascript" src="{% static 'main/editCustomer/script.js' %}"></script>
+  <link rel="stylesheet" type="text/css" href="{% static 'main/newCustomer/style.css' %}">
+  <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:200,300,400,700&display=swap" rel="stylesheet"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=1">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyConQmCFHbBvBdsTQg6g5ws7TmE6xcRo_s&libraries=places"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="cover"></div>
+    <header class="header">
+      <p>{{ user }} <span>&dtrif;</span></p>
+      <p>Edit Customer...</p>
+      <button class="delete-customer-btn">DEL</button>
+      <div class="delete-customer-prompt">
+        <p>Delete this Customer?</p>
+        <button>Yes</button>
+        <button>No</button>
+      </div>
+      <div class="log_out">
+        <button><a href="/logout">Log out</a></button>
+      </div>
+    </header>
+    <main class="main">
+			<form action="/customers/save/{{customer.id}}" method="POST" class="edit-customer-form">
+				{% csrf_token %}
+        <label for="input-name">Name:</label>
+        <input type="text" name="name" value="{{customer.name}}">
+        <label for="input-email">Email:</label>
+        <input type="text" name="email" value="{{customer.email}}">
+        <label for="input-phone-1">Phone (1):</label>
+        <input type="tel" name="phone_number" value="{{customer.phone_number}}">
+        <label for="input-address">Address:</label>
+        <input type="text" name="address" value="{{customer.address}}" id="pac-input">
+        <div class="edit-customer-buttons">
+          <button type="button" class="edit-customer-del" onclick="window.location.href='/customers/{{customer.id}}'">Cancel</button>
+          <button type="submit" class="edit-customer-save">Save</button>
+        </div>
+      </form>
+    </main>
+    <footer class="footer">
+      <button class="footer-btn">Go back</button>
+    </footer>
+  </div>
+  <script>
+    function log_out_button(e) {
+		document.querySelector("header p").classList.toggle("selected");
+		document.querySelector(".cover").classList.toggle("active");
+		document.querySelector(".log_out").classList.toggle("active");
+
+    }
+
+    function deleteCustomer(e) {
+      if (confirm("Are you sure you want to delete this Customer? (This cannot be undone)")) {
+          fetch("/customers/delete/{{customer.id}}",
+          {
+            credentials: "include",
+          }).then((response) => {
+              window.location.href = response.url;
+          });
+      }
+    }
+    
+    window.onload = () => {
+      document.querySelector("header p").addEventListener("click", log_out_button);
+      document.querySelector(".cover").addEventListener("click", log_out_button);
+      
+      let deleteCustomerBtn = document.querySelector(".delete-customer-btn");
+      let deleteCustomerPrompt = document.querySelector(".delete-customer-prompt");
+      deleteCustomerBtn.addEventListener("click", (e) => {
+          deleteCustomerPrompt.classList.toggle("active");
+      });
+
+      deleteCustomerPrompt.querySelectorAll("button")[1].addEventListener("click", (e) => {
+        deleteCustomerPrompt.classList.toggle("active");
+      })
+
+      deleteCustomerPrompt.querySelectorAll("button")[0].addEventListener("click", deleteCustomer);
+      document.querySelector("header p:first-child").addEventListener("click", log_out_button);
+      document.querySelector(".cover").addEventListener("click", log_out_button);
+      var input = document.getElementById("pac-input");
+      var autocomplete = new google.maps.places.Autocomplete(input, {});
+    }
+  </script>
+</body>
+</html>

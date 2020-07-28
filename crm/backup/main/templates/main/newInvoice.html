@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<head>
+	{% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static 'main/addInvoice/style.css' %}">
+	{% load static %}
+	<script type="text/javascript" src="{% static 'main/addInvoice/script.js' %}"></script>
+  <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:300,400,700&display=swap" rel="stylesheet"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=1">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>New Invoice...</h1>
+    </header>
+    <main class="content">
+      <div class="jobs_modal">
+        <div class="jobs_modal-content">
+          <h2>Choose a job...</h2>
+          <div class="close-button">X</div>
+          <ul>
+            <li>
+              <div class="job-id-header">ID</div>
+              <div class="job-date-header">Date</div>
+              <div class="job-name-header">Name</div>
+            </li>
+            {% for job in jobs %}
+            <li class="job-list-item">
+              <div class="job-id">{{ job.id }}</div>
+              <div class="job-date">{{ job.creation_date }}</div>
+              <div class="job-name">{{ job.name }}</div>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      <div class="content__header">
+        <h3>Customer: </h3>
+        <a href="/customers/{{customer.id}}">{{ customer.name }}</a>
+        <h3>Job: </h3>
+        <button class="choose-job">Choose...</button>
+      </div>
+      <div class="content__contact">
+        <h2>Contact info</h2>
+        <div class="content__contact-grid">
+          <label for="content__contact-name">Name: </label>
+          <input type="text" id="content__contact-name" value="{{customer.name}}">
+          <label for="content__contact-phone">Phone: </label>
+          <input type="tel" id="content__contact-phone" value="{{customer.phone_number}}">
+          <label for="content__contact-email">Email: </label>
+          <input type="email" id="content__contact-email" value="{{customer.email}}">
+        </div>
+      </div>
+      <div class="content__details">
+        <h2>Invoice Details</h2>
+        <div class="content__details-grid">
+          <label for="content__details-name">Invoice Name: </label>
+          <input type="text" id="content__details-name">
+          <label for="content__details-start-date">Due Date:</label>
+          <input type="date" id="content__details-start-date" class="due_date">
+
+        </div>
+      </div>
+      <div class="content__tasks">
+        <h2>Tasks</h2>
+        <div class="content__tasks-header">
+          <div class="content__tasks-header-num">#</div>
+          <div class="content__tasks-header-name">NAME</div>
+          <div class="content__tasks-header-qty">QTY</div>
+          <div class="content__tasks-header-price">PRICE</div>
+        </div>
+        <ul class="content__tasks-list">
+        </ul>
+<!-- 
+          <form class="content__task-form">
+            <div class="content__task-form-num">1</div>
+            <input type="text" name="name" class="content__task-form-name" placeholder="Task name">
+            <input type="text" name="qty" class="content__task-form-qty" placeholder="Qty">
+            <input type="text" name="price" class="content__task-form-price" placeholder="Price">
+            <textarea name="description" class="content__task-form-desc" placeholder="Description"></textarea>
+            <div class="content__task-form-btns">
+              <button class="save">Save</button>
+              <button class="cancel">Cancel</button>
+            </div>
+          </form> -->
+        <button class="add_task">+</button>
+      </div>
+      <div class="buttons">
+        <a href="/customers/{{customer.id}}" class="footer__button">Cancel</a>
+        <a class="footer__button footer__button-save">Save</a>
+      </div>
+    </main>
+    <footer class="footer">
+      <a href="/customers/{{customer.id}}" class="footer__button">Cancel</a>
+      <a class="footer__button footer__button-save">Save</a>
+    </footer>
+  </div>
+  <script>
+    const CUSTOMER_ID = {{ customer.id }};
+  </script>
+</body>
+</html>

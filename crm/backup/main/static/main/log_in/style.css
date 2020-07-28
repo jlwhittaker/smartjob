@@ -1,0 +1,106 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; }
+
+body {
+  display: flex;
+  justify-content: center;
+  background: #999; }
+
+.container {
+  position: relative;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  max-width: 1400px;
+  height: 100vh;
+  justify-content: space-evenly;
+  align-items: center;
+  background: #f0f0f0; }
+  .container h1 {
+    height: 10%;
+    font-family: sans-serif;
+    font-weight: 300;
+    color: #1d1d1d; }
+  .container .login_parent {
+    width: 60%;
+    min-width: 360px;
+    max-width: 500px;
+    height: 60vh;
+    max-height: 500px;
+    display: flex;
+    justify-content: center;
+    border: 1px solid black; }
+    @media only screen and (max-width: 700px) {
+      .container .login_parent {
+        width: 100vw;
+        min-width: 300px; } }
+    .container .login_parent form {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(9, 1fr); }
+      .container .login_parent form input {
+        font-size: 16px; }
+      .container .login_parent form .select {
+        display: none; }
+        .container .login_parent form .select:checked + label {
+          background-color: #7a7a7a;
+          color: #f9f9f9;
+          text-decoration: underline;
+          font-weight: 800;
+          border: 2px solid black;
+          box-shadow: dimgray 0 3px 5px; }
+      .container .login_parent form .login_label {
+        grid-column: 1 / 2;
+        align-self: center;
+        display: flex;
+        justify-content: center;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid black;
+        cursor: pointer;
+        box-shadow: #c4c4c4 0 6px 8px; }
+        .container .login_parent form .login_label:nth-of-type(2) {
+          grid-column: 2 / -1; }
+      .container .login_parent form .signup:not(:checked) ~ p {
+        display: none; }
+      .container .login_parent form .username_label {
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        grid-column: 1 / -1;
+        grid-row: 3 / 4;
+        margin-bottom: 10px; }
+      .container .login_parent form .username_input {
+        grid-column: 1 / -1;
+        grid-row: 4 / 5;
+        width: 80%;
+        margin-left: 10%; }
+      .container .login_parent form .password_label {
+        grid-row: 6 / 7;
+        grid-column: 1 / -1;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        margin-bottom: 10px; }
+      .container .login_parent form .password_input {
+        grid-row: 7 / 8;
+        grid-column: 1 / -1;
+        width: 80%;
+        margin-left: 10%; }
+      .container .login_parent form p {
+        grid-row: 8 / 9;
+        grid-column: 1 / -1;
+        font-size: 14px;
+        color: #f00808;
+        padding: 5px 10px;
+        text-align: center; }
+      .container .login_parent form button {
+        grid-row: 9 / 10;
+        grid-column: 1 / -1; }

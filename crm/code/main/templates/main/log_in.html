@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<head>
+  {% load static %}
+  <link rel="stylesheet" href="{% static '/main/log_in/style.css' %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:300,400,700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <h1>Log in to continue</h1>
+    <div class="login_parent">
+      <form action="javascript:validate()">{% csrf_token %}
+        <input type="radio" name="action_choice" class="select signup" 
+               value="signup" id="select_signup" checked>
+        <label for="select_signup" class="login_label">Create User</label>
+
+        <input type="radio" name="action_choice" class="select log_in" 
+               value="login" id="select_login">
+        <label for="select_login" class="login_label">Log In</label>
+
+        <label for="username" class="username_label">Username: </label>
+        <input id="username" name="username" class="username_input" type="text" required>
+        <p class="username_taken">Username already taken</p>
+
+        <label for="password" class="password_label">Password: </label>
+        <input id="password" name="password" class="password_input" type="password" required>
+        <p class="password-warning">For demonstration purposes only. Please use a throwaway password.</p>
+        <p class="invalid-credentials">Invalid credentials. Create an account or try again.</p>
+        <button>Submit</button>
+      </form>
+    </div>
+  </div>
+  <script>
+    //Ensure username is not taken
+    function validate() {
+      let inputs = document.querySelectorAll("input");
+      let req = {};
+      for (let input of inputs) {
+        if (input.checked == false && input.id.includes("select")) {
+          continue;
+        }
+        req[input.name] = input.value;
+      }
+      fetch("/auth", {
+        method: "POST",
+        body: JSON.stringify(req),
+        credentials: 'include',
+      }).then((response) => {
+        return response.json();
+      }).then((data) => {
+        if (data["error"]) {
+          if (data["error"] == "username taken") {
+            usernameTaken();
+          }
+          else {
+            invalidCredentials();
+          }
+        }
+        else {
+          window.location.href = "/";
+        }
+      })
+    }
+
+    function usernameTaken() {
+      document.querySelector(".username_taken").classList.add("active");
+    }
+
+    function invalidCredentials() {
+      document.querySelector(".invalid-credentials").classList.add("active");
+    }
+
+    document.querySelector(".username_input").addEventListener("focus", (e) => {
+      document.querySelector(".invalid-credentials").classList.remove("active");
+      document.querySelector(".username_taken").classList.remove("active");
+    });
+
+    document.ontouchmove = (e) => {
+      e.preventDefault;
+    }
+
+    document.querySelectorAll("input").forEach((input) => {
+      input.addEventListener("focus", (e) => {
+        document.body.scrollTop = 0;
+      })
+    })
+
+  </script>
+</body>
+</html>

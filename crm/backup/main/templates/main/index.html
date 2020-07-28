@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<head>
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static '/main/index/style.css' %}" />
+  {% load static %}
+  <script type="text/javascript" src="{% static '/main/index/script.js' %}"></script>
+
+  <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:300,400,700&display=swap" rel="stylesheet"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=1">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+</head>
+<body>
+  <div class="container">
+    <div class="cover"></div>
+    <header class="header">
+      <p>{{ user }} <span>&dtrif;</span></p>
+      <p>COMPANY NAME</p>
+      <div class="log_out">
+        <button><a href="/logout">Log out</a></button>
+      </div>
+    </header>
+    <nav class="nav">
+      <div class="nav__buttons">
+        <button class="nav__button active">Customers</button>
+        <ul>
+          <li><a href="/customers/all"><button>See all</button></a></li>
+          <li><button class="add_new">Add new</button></li>
+        </ul>
+        <button class="nav__button">Jobs</button>
+        <ul>
+          <li><a href="#"><button>See all</button></a></li>
+          <li><button class="add_new">Add new</button></li>
+        </ul>
+        <button class="nav__button">Invoices</button>
+        <ul>
+          <li><a href="#"><button>See all</button></a></li>
+          <li><button class="add_new">Add new</button></li>
+        </ul>
+        <button class="nav__button">Estimates</button>
+        <ul>
+          <li><a href="#"><button>See all</button></a></li>
+          <li><button class="add_new">Add new</button></li>
+        </ul>
+      </div>
+    </nav>
+    <main class="content">
+      <div class="search_bar">
+        <input id="search" type="search" placeholder="Search...">
+      </div>
+			<div class="cards customers active">
+      {% for customer in customers %}
+        <a href="/customers/{{customer.id}}">
+          <div class="card card-customer">
+            
+            <h3 class="card-customer__name">{{ customer.name}}</h4>
+            <div class="card-customer__details">
+              <p class="card-customer-email">{{customer.email}}</p>
+              <p class="card-customer__phone">{{customer.phone_number}}</p>
+            </div>
+          </div>
+        </a>
+			{% endfor %}
+      </div>
+
+      <div class="cards jobs">
+      {% for job in jobs %}
+        <a href="/jobs/{{job.id}}">
+          <div class="card card-job">
+            <h3 class="card-job__name">{{job.name}}</h4>
+            <div class="card-job__details">
+              <p class="card-job__customer">{{job.customer.name}}</p>
+              <p class="card-job__date">{{job.start_date}}</p>
+            </div>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+
+      <div class="cards estimates">
+      {% for estimate in estimates %}
+        <a href="/estimates/{{estimate.id}}">
+          <div class="card card-estimate">
+            <h3 class="card-estimate__name">{{estimate.name}}</h4>
+            <div class="card-estimate__details">
+              <p class="card-estimate__customer">{{estimate.customer.name}}</p>
+              <p class="card-estimate__date">{{estimate.creation_date}}</p>
+            </div>
+          </div>
+        </a>
+			{% endfor %}
+      </div>
+
+      <div class="cards invoices">
+        {% for invoice in invoices %}
+        <a href="/invoices/{{invoice.id}}">
+          <div class="card card-invoice">
+            <h3 class="card-invoice__customer">{{invoice.customer.name}}</h4>
+            <div class="card-invoice__details">
+              <p class="card-invoice__total">{{invoice.total}}</p>
+              <p class="card-invoice__date">{{invoice.creation_date}}</p>
+            </div>
+          </div>
+        </a>
+				{% endfor %}
+      </div>
+    </main>
+    <div class="add_new_modal">
+      <div class="modal_content">
+        <h2 class="create_new">Create new</h2>
+        <select name="new_type" class="new_type">
+          <option value="customer">Customer</option>
+          <option value="estimate">Estimate</option>
+          <option value="invoice">Invoice</option>
+          <option value="job">Job</option>
+          <option value="note">Note</option>
+        </select>
+        <h2 class="choose_customer search">Choose a customer...</h2>
+        <div class="customer_choice search">
+          
+          <input type="search" class="live_search" placeholder="search for customer...">
+        </div>
+        <button>Go...</button>
+        <div class="live_search_results">
+          <ul></ul>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <button class="footer-btn">See all</button>
+      <button class="footer-btn add_new">Add new</button>
+    </footer>
+  </div>
+</body>
+</html>

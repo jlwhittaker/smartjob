@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<head>
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'main/showJob/style.css' %}">
+  {% load static %}
+  <script type="text/javascript" src="{% static 'main/showEstimate/script.js' %}"></script>
+  <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:300,400,700&display=swap" rel="stylesheet"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=1">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+</head>
+<body>
+  <div class="container">
+    <div class="cover"></div>
+    <header class="header">
+      <div class="header-wrapper">
+        <p>{{ user }} <span>&dtrif;</span></p>
+        <div class="log_out">
+          <button><a href="/logout">Log out</a></button>
+        </div>
+      </div>
+      <div class="job-banner">
+        <a class="back-home" href="/">Back Home</a>
+        <h1>{{ estimate.name }}</h1>
+        <a class="edit-job" href="/estimates/edit/{{ estimate.id }}">Edit Estimate</a>
+      </div>
+    </header>
+    <nav class="nav">
+      <div class="nav__buttons">
+        <button class="nav__button active">Details</button>
+        <button class="nav__button">Tasks</button>
+        <button class="nav__button notes_btn">Notes</button>
+        <button class="add_note_btn">+</button>
+        <!-- <button class="nav__button">Edit</button> -->
+      </div>
+    </nav>
+    <main class="content">
+      <div class="job-details active" id="details">
+        <div class="job-details__contact">
+          <h4>Estimate Contact:</h4>
+          <p>Customer: </p><p><a href="/customers/{{estimate.customer.id}}">{{ estimate.customer.name }}</a></p>
+          <p>Contact Name: </p><p>{{ estimate.contact_name }}</p>
+          <p>Contact Phone: </p><p>{{ estimate.contact_phone }}</p>
+          <p>Location: </p>
+          <p>
+            <a 
+              href="https://www.google.com/maps/search/?api=1&query={{estimate.address}}"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {{ estimate.address }}
+            </a>
+          </p>
+        </div>
+        <div class="job-details__description">
+          <h4>Estimate Description: </h4>
+          <p>{{ estimate.description }}
+          </p>
+        </div>
+        <div class="jon-details__estimates">
+          <h4>Job(s):</h4>
+          <ul>
+            {% if job is not None %}
+            <li><a href="/jobs/{{job.id}}">Job #: {{job.id}}</a></li>
+            {% else %}
+            <p>{{ job }}</p>
+            {% endif %}
+          </ul>
+        </div>
+        <div class="job-details__date">
+          <p class="job-details__date-created">Date created: <span>{{estimate.creation_date}}</span></p>
+        </div>
+      </div>
+      <div class="content__tasks" id="tasks">
+        <div class="content__tasks-header">
+          <div class="content__tasks-header-num">#</div>
+          <div class="content__tasks-header-name">NAME</div>
+          <div class="content__tasks-header-qty">QTY</div>
+          <div class="content__tasks-header-price">PRICE</div>
+        </div>
+        <ul class="content__tasks-list">
+          {% for task in tasks %}
+            <li class="content__task selected">
+                <div class="flex-wrap">
+                <div class="content__task-num">{{ forloop.counter }}</div>
+                <div class="content__task-name">{{ task.name }}</div>
+                <div class="content__task-qty">{{ task.quantity }}</div>
+                <div class="content__task-price">${{ task.price }}</div>
+                </div>
+                <div class="content__task-desc">
+                  <p>{{ task.description }}</p>
+                </div>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="content__notes" id="notes">
+        <div class="content__notes-header">
+          <div class="content__notes-header-date">DATE</div>
+          <div class="content__notes-header-content">CONTENT</div>
+        </div>
+        <ul>
+          {% for note in notes %}
+          <li class="content__note">
+            <div class="content__note-date">{{ note.date }}</div>
+            <div class="content__note-content">{{ note.content }}</div>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="add_note_modal">
+        <div class="add_note_modal__content">
+          <div>
+            <textarea placeholder="Write note..." class="note-content"></textarea>
+            <button type="button">Cancel</button>
+            <button type="button" class="save-note">Save</button>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="footer">
+      <a href="/" class="footer__button">Back Home</a>
+      <a href="/estimates/edit/{{ estimate.id }}"class="footer__button">Edit Estimate</a>
+      <!-- <div class="job-stop-prompt active">
+        <button class="job-stop-prompt__complete">Mark as completed</button>
+        <button class="job-stop-prompt__pause">Pause job</button>
+        <button class="job-stop-prompt__cancel">Cancel job</button>
+        <button class="job-stop-prompt__edit">Edit job</button>
+      </div> -->
+    </footer>
+  </div>
+  <script>const ID = {{estimate.id}};</script>
+</body>
+</html>

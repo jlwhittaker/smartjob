@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<head>
+	{% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static 'main/showCustomer/style.css' %}">
+	{% load static %}
+	<script type="text/javascript" src="{% static 'main/showCustomer/script.js' %}"></script>
+	
+  <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:300,400,700&display=swap" rel="stylesheet"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=1">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+			<h1 class="customer-name">{{ customer.name }}</h1>
+      <button class="customer-details-btn">Details</button>
+      <div class="customer-details">
+        <div class="customer-details__content">
+          <button class="close">X</button>
+          <h2>{{ customer.name }}</h2>
+          <p>Email: </p>
+          <p>{{ customer.email }}</p>
+          <p>Phone 1: </p>
+          <p>{{ customer.phone_number }}</p>
+          <p>Phone 2: </p>
+          <p>n/a</p>
+          <p>Address: </p>
+          <p>{{ customer.address }}</p>
+          <p>Date added: </p>
+          <p>{{ customer.add_date }}</p>
+          <button class="edit">Edit customer</button>
+        </div>
+      </div>
+    </header>
+    <nav class="nav">
+        <div class="nav__buttons">
+          <button class="nav__button active">Jobs</button>
+          <ul>
+            <li><button><a href="/jobs/new/{{customer.id}}">Add new</a></button></li>
+          </ul>
+          <button class="nav__button">Estimates</button>
+          <ul>
+            <li><button><a href="/estimates/new/{{customer.id}}">Add new</a></button></li>
+          </ul>
+          <button class="nav__button">Invoices</button>
+          <ul>
+            <li><button>Add new</button></li>
+          </ul>
+          <button class="nav__button">Notes</button>
+          <ul>
+            <li><button>Add new</button></li>
+          </ul>
+        </div>
+        <button class="home-btn"><a href="/">Go back home...</a></button>
+    </nav>
+
+
+    <main class="content">
+      <form class="content__search">
+          <input type="text" placeholder="Search...">
+          <button type="submit">Search</button>
+      </form>
+
+      <div class="content__jobs active">
+        <div class="content__list-header">
+          <button class="content__list-header--id">ID</button>
+          <button class="content__list-header--date">Date</button>
+          <button class="content__list-header--name">Name</button>
+        </div>
+        <ul class="content__list">
+
+          {% for job in jobs %}
+          <a href="/jobs/{{job.id}}">
+            <li class="content__list-item">
+              <div class="content__list-item-id">{{ job.id }}</div>
+              <div class="content__list-item-date">{{ job.start_date }}</div>
+              <div class="content__list-item-name">{{ job.name }}</div>
+            </li>
+          </a>
+					{% endfor %}
+          
+        </ul>
+      </div>
+
+      <div class="content__invoices ">
+        <div class="content__list-header">
+          <button class="content__list-header--id">ID</button>
+          <button class="content__list-header--date">Date</button>
+          <button class="content__list-header--name">Name</button>
+        </div>
+        <ul class="content__list">
+          {% for invoice in invoices %}
+          <a href="/invoices/{{invoice.id}}">
+            <li class="content__list-item">
+              <div class="content__list-item-id">{{ invoice.id }}</div>
+              <div class="content__list-item-date">{{ invoice.creation_date }}</div>
+              <div class="content__list-item-name">{{ invoice.job.name }}</div>
+            </li>
+          </a>
+					{% endfor %}
+        </ul>
+      </div>
+
+      <div class="content__estimates ">
+        <div class="content__list-header">
+          <button class="content__list-header--id">ID</button>
+          <button class="content__list-header--date">Date</button>
+          <button class="content__list-header--name">Name</button>
+        </div>
+        <ul class="content__list">
+
+          {% for estimate in estimates %}
+          <a href="/estimates/{{estimate.id}}">
+            <li class="content__list-item">
+              <div class="content__list-item-id">{{ estimate.id }}</div>
+              <div class="content__list-item-date">{{ estimate.creation_date }}</div>
+              <div class="content__list-item-name">{{ estimate.name }}</div>
+            </li>
+          </a>
+					{% endfor %}
+          
+        </ul>
+      </div>
+
+      <div class="content__notes ">
+        <div class="content__list-header">
+          <button class="content__list-header--id">ID</button>
+          <button class="content__list-header--date">Date</button>
+          <button class="content__list-header--name">Content</button>
+        </div>
+        <ul class="content__list">
+
+					{% for note in notes %}
+          <li class="content__list-item">
+            <div class="content__list-item-id">{{ note.id }}</div>
+            <div class="content__list-item-date">{{ note.date }}</div>
+            <div class="content__list-item-name">{{ note.content }}</div>
+					</li>
+					{% endfor %}
+
+        </ul>
+      </div>
+
+    </main>
+    <footer class="footer">
+      <button class="footer-btn">Back Home</button>
+      <button class="footer-btn">Add new...</button>
+      <div class="footer__new">
+        <button class="footer__new-job"><a href="/jobs/new/{{customer.id}}">Job</a></button>
+        <button class="footer__new-invoice"><a href="/invoices/new/{{customer.id}}">Invoice</a></button>
+        <button class="footer__new-estimate"><a href="/estimates/new/{{customer.id}}">Estimate</a></button>
+        <button class="footer__new-note">Note</button>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

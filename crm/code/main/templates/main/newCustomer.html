@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<head>
+	{% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'main/newCustomer/style.css' %}">
+  <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:200,300,400,700&display=swap" rel="stylesheet"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=1">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyConQmCFHbBvBdsTQg6g5ws7TmE6xcRo_s&libraries=places"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="cover"></div>
+    <header class="header">
+      <p>{{ user }} <span>&dtrif;</span></p>
+      <p>New Customer...</p>
+      <div class="log_out">
+        <button><a href="/logout">Log out</a></button>
+      </div>
+    </header>
+    <main class="main">
+			<form action="/customers/save" method="POST" class="edit-customer-form">
+				{% csrf_token %}
+        <label for="input-name">Name:</label>
+        <input type="text" name="name">
+        <label for="input-email">Email:</label>
+        <input type="text" name="email">
+        <label for="input-phone-1">Phone (1):</label>
+        <input type="tel" name="phone_number" pattern="([0-9]{3}-){1,2}[0-9]{4}" placeholder="xxx-xxx-xxxx">
+        <label for="input-address">Address:</label>
+        <input type="text" name="address" id="pac-input" placeholder="">
+        <label for="input-referral">Referral:</label>
+        <input type="text" name="referral">
+        <div class="edit-customer-buttons">
+          <button type="button" class="edit-customer-del" onclick="window.location.href='/'">Cancel</button>
+          <button type="submit" class="edit-customer-save">Save</button>
+        </div>
+      </form>
+    </main>
+    <footer class="footer">
+      <button class="footer-btn">Back Home</button>
+    </footer>
+  </div>
+  <script>
+    function log_out_button(e) {
+		document.querySelector("header p").classList.toggle("selected");
+		document.querySelector(".cover").classList.toggle("active");
+		document.querySelector(".log_out").classList.toggle("active");
+
+    }
+    
+    window.onload = () => {
+      document.querySelector("header p").addEventListener("click", log_out_button);
+      document.querySelector(".cover").addEventListener("click", log_out_button);
+      
+      var input = document.getElementById("pac-input");
+      var autocomplete = new google.maps.places.Autocomplete(input, {});
+      document.querySelector(".footer-btn").addEventListener("click", (e) => {
+        window.location.href="/";
+      });
+    }
+  </script>
+</body>
+</html>

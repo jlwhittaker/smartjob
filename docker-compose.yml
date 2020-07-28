@@ -1,0 +1,15 @@
+version: '3'
+services:
+  app:
+
+    build: ./crm/code/
+    container_name: django
+    expose:
+      - 8080
+    command: bash -c "gunicorn --workers=3 crm.wsgi -b 0.0.0.0:8080"
+
+  nginx:
+    restart: always
+    build: ./nginx/
+    ports:
+      - "8080:80"

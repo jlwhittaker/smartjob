@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<head>
+	{% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'main/addCustomer/style.css' %}">
+  <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:200,300,400,700&display=swap" rel="stylesheet"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=1">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <button class="back-btn">Go back</button>
+      <h1>New Customer...</h1>
+    </header>
+    <main class="main">
+			<form action="/addCustomer" method="POST" class="edit-customer-form">
+				{% csrf_token %}
+        <label for="input-name">Name:</label>
+        <input type="text" name="name">
+        <label for="input-email">Email:</label>
+        <input type="text" name="email">
+        <label for="input-phone-1">Phone (1):</label>
+        <input type="text" name="phone_number">
+        <label for="input-phone-2">Phone (2):</label>
+        <input type="text">
+        <label for="input-address">Address:</label>
+        <input type="text" name="address">
+        <label for="input-referral">Referral:</label>
+        <input type="text" name="referral">
+        <div class="edit-customer-buttons">
+          <button class="edit-customer-del">Cancel</button>
+          <button type="submit" class="edit-customer-save">Save</button>
+        </div>
+      </form>
+    </main>
+    <footer class="footer">
+      <button class="footer-btn">Go back</button>
+    </footer>
+  </div>
+
+</body>
+</html>

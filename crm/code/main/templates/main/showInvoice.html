@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<head>
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'main/showInvoice/style.css' %}">
+  {% load static %}
+  <script type="text/javascript" src="{% static 'main/showInvoice/script.js' %}"></script>
+  <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:300,400,700&display=swap" rel="stylesheet"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=1">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+</head>
+<body>
+  <div class="container">
+    <div class="cover"></div>
+    <header class="header">
+      <p>{{ user }} <span>&dtrif;</span></p>
+      <div class="log_out">
+        <button><a href="/logout">Log out</a></button>
+      </div>
+      <h1>Invoice #{{ invoice.id }}</h1>
+      <button class="update_toggle">UPDATE</button>
+      <button onclick="window.location.href='/invoices/edit/{{ invoice.id }}'">EDIT</button>
+      <div class="update_invoice">
+        {% if invoice.status == 'Created (Not Sent)' %}
+            <button class="update-0 selected">Created (Not Sent)</button>
+          {% else %}
+            <button class="update-0">Created (Not Sent)</button>
+          {% endif %}
+
+          {% if invoice.status == 'Sent (Unpaid)' %}
+            <button class="update-1 selected">Sent (Unpaid)</button>
+          {% else %}
+            <button class="update-1">Sent (Unpaid)</button>
+          {% endif %}
+
+          {% if invoice.status == 'Paid' %}
+            <button class="update-2 selected">Paid</button>
+          {% else %}
+            <button class="update-2">Paid</button>
+          {% endif %}
+      </div>
+    </header>
+    <main class="content">
+      <div class="content__invoice-details">
+        <p>Customer: </p><a href="/customers/{{invoice.customer.id}}">{{invoice.customer.name}}</a>
+        <p>Job: </p>
+        {% if invoice.job %}
+          <a href="/jobs/{{invoice.job.id}}">{{invoice.job.id}}</a>
+        {% else %}
+          <p>N/A</p>
+        {% endif %}
+        <p>Date Created: </p><p>{{invoice.creation_date}}</p>
+        <p>Due Date:</p><p>{{invoice.due_date}}</p>
+        <p>Status: </p><p>{{invoice.status}}</p>
+      </div>
+      <div class="content__tasks">
+        <div class="content__tasks-header">
+          <div class="content__tasks-header-num">#</div>
+          <div class="content__tasks-header-name">NAME</div>
+          <div class="content__tasks-header-qty">QTY</div>
+          <div class="content__tasks-header-price">PRICE</div>
+          <div class="content__tasks-header-subtotal">SUBTOTAL</div>
+        </div>
+        <ul class="content__tasks-list">
+
+          {% for task in tasks %}
+          <li class="content__task selected">
+            <div class="flex-wrap">
+              <div class="content__task-num">{{ forloop.counter }}</div>
+              <div class="content__task-name">{{task.name}}</div>
+              <div class="content__task-qty">{{task.quantity}}</div>
+              <div class="content__task-price">${{task.price}}</div>
+              <div class="content__task-subtotal">${{task.total}}</div>
+            </div>
+            <div class="content__task-desc">
+              <p>{{task.description}}</p>
+            </div>
+          </li>
+          {% endfor %}
+
+        </ul>
+      </div>
+      <div class="total">
+        <p>Total: </p>
+        <p>${{invoice.total}}</p>
+      </div>
+    </main>
+    <footer class="footer">
+      <div class="footer__total">
+        <p>Total: </p>
+        <p>${{invoice.total}}</p>
+      </div>
+      <div class="footer__btns">
+        <button onclick="window.location.href='/'" class="footer__button">Back Home</button>
+        <button class="footer__button update_toggle">Update Invoice</button>
+        <div class="update_invoice_footer">
+
+          {% if invoice.status == 'Created (Not Sent)' %}
+            <button class="update-0 selected">Created (Not Sent)</button>
+          {% else %}
+            <button class="update-0">Created (Not Sent)</button>
+          {% endif %}
+
+          {% if invoice.status == 'Sent (Unpaid)' %}
+            <button class="update-1 selected">Sent (Unpaid)</button>
+          {% else %}
+            <button class="update-1">Sent (Unpaid)</button>
+          {% endif %}
+
+          {% if invoice.status == 'Paid' %}
+            <button class="update-2 selected">Paid</button>
+          {% else %}
+            <button class="update-2">Paid</button>
+          {% endif %}
+
+        </div>
+      </div>
+    </footer>
+    <div class="update_cover"></div>
+  </div>
+  <script>var ID = {{ invoice.id }};</script>
+</body>
+</html>
