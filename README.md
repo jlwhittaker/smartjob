@@ -42,6 +42,6 @@
 <p>This project is run via two Docker containers, one for the actual Django app, and one for Nginx. The building of the containers is handled by the docker-compose file. To run it yourself, use <code>docker-compose</code> from the same directory as the compose file:</p>
 <code>docker-compose build && docker-compose up</code><br/><br/>
 <p>This starts the app at port 8080. To change the port, edit the gunicorn command in the docker-compose file.</p>
-<p>If any changes are made in the static files of the app, you need to run:</p>
+<p>If any changes are made to static files in the Django part of the code, you need to run:</p>
 <code>python manage.py --collect-static</code><br/><br/>
 <p>This will put all the static files in the directory for the Nginx container.</p>
