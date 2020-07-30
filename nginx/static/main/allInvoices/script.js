@@ -138,7 +138,13 @@ let handlers = {
     search(e) {
         let query = e.target.closest("input").value;
         searchFunctions.retrieve(query);
-    }
+    },
+
+    logOutButton(e) {
+        document.querySelector("header p").classList.toggle("selected");
+        document.querySelector(".cover").classList.toggle("active");
+        document.querySelector(".log_out").classList.toggle("active");
+    },
 }
 
 window.onload = () => {
@@ -157,4 +163,8 @@ window.onload = () => {
     document.querySelectorAll("tbody").forEach((elem) => {
         elem.addEventListener("click", handlers.viewInvoice);
     })
+
+    // Toggle log out button visibility
+    document.querySelector("header p").addEventListener("click", handlers.logOutButton);
+    document.querySelector(".cover").addEventListener("click", handlers.logOutButton);
 }

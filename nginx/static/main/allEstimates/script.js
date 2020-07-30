@@ -115,7 +115,13 @@ let tableFunctions = {
         document.querySelectorAll("tbody").forEach((elem) => {
             elem.addEventListener("click", handlers.viewEstimate);
         });
-    }
+    },
+
+    logOutButton(e) {
+        document.querySelector("header p").classList.toggle("selected");
+        document.querySelector(".cover").classList.toggle("active");
+        document.querySelector(".log_out").classList.toggle("active");
+    },
 
 }
 
@@ -157,4 +163,8 @@ window.onload = () => {
     document.querySelectorAll("tbody").forEach((elem) => {
         elem.addEventListener("click", handlers.viewEstimate);
     })
+
+    // Toggle log out button visibility
+    document.querySelector("header p").addEventListener("click", handlers.logOutButton);
+    document.querySelector(".cover").addEventListener("click", handlers.logOutButton);
 }
